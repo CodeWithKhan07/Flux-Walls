@@ -1,12 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:fluxwalls/data/network/network_api_service.dart';
-import 'package:wallpaper_manager_plus/wallpaper_manager_plus.dart';
 
 import '../../utils/app_utils.dart';
 
 class WallpaperRepository {
   final apiService = NetworkApiService();
-  final wallpaperManager = WallpaperManagerPlus();
+
   static const platform = MethodChannel('com.example.fluxwalls/wallpaper');
 
   /// Downloads a wallpaper and optionally reports progress
