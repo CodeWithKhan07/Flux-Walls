@@ -101,6 +101,17 @@ class DiscoverScreen extends StatelessWidget {
                         },
                         child: CachedNetworkImage(
                           imageUrl: photo.imageUrl ?? '',
+                          placeholder: (context, url) {
+                            return const Center(
+                              child: SizedBox(
+                                height: 35,
+                                width: 35,
+                                child: CircularProgressIndicator(
+                                  color: Colors.teal,
+                                ),
+                              ),
+                            );
+                          },
                           fit: BoxFit.cover,
                           errorWidget: (_, __, ___) => const Icon(Icons.error),
                         ),

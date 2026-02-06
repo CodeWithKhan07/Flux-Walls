@@ -20,22 +20,18 @@ class ImageDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           photo.title.trimRight().toUpperCase(),
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         backgroundColor: Colors.transparent,
       ),
       backgroundColor: const Color(0xFF102220),
       body: Stack(
         children: [
-          // ───── Full-screen Hero Image ─────
-          Hero(
-            tag: photo.id,
-            child: CachedNetworkImage(
-              imageUrl: photo.imageUrl,
-              width: size.width,
-              height: size.height,
-              fit: BoxFit.cover,
-            ),
+          CachedNetworkImage(
+            imageUrl: photo.imageUrl,
+            width: size.width,
+            height: size.height,
+            fit: BoxFit.cover,
           ),
 
           // ───── Gradient Overlay ─────

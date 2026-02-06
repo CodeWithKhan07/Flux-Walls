@@ -8,6 +8,8 @@ import 'package:fluxwalls/views/imagedetail/image_detail_page.dart';
 import 'package:fluxwalls/views/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
+import '../views/categories/categories_wallpaper_screen.dart';
+
 class RouteNames {
   static const String splash = "/splash";
   static const String dashboard = "/dashboard";
@@ -15,6 +17,7 @@ class RouteNames {
   static const String categories = "/categories";
   static const String downloads = "/downloads";
   static const String imageDetailpage = "/imageDetailPage";
+  static const String categoriesWallpapers = "/categorieswallpaper";
 }
 
 class AppRoutes {
@@ -50,6 +53,12 @@ class AppRoutes {
       name: RouteNames.imageDetailpage,
       page: () => ImageDetailPage(),
       binding: ImageDetailBindings(),
+      transitionDuration: Duration(milliseconds: 600),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: RouteNames.categoriesWallpapers,
+      page: () => CategoryWallpapersScreen(),
       transitionDuration: Duration(milliseconds: 600),
       transition: Transition.upToDown,
     ),

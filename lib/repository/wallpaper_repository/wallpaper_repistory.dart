@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/services.dart';
 import 'package:fluxwalls/data/network/network_api_service.dart';
 import 'package:wallpaper_manager_plus/wallpaper_manager_plus.dart';
 
@@ -8,6 +7,7 @@ import '../../utils/app_utils.dart';
 class WallpaperRepository {
   final apiService = NetworkApiService();
   final wallpaperManager = WallpaperManagerPlus();
+  static const platform = MethodChannel('com.example.fluxwalls/wallpaper');
 
   /// Downloads a wallpaper and optionally reports progress
   Future<String> downloadWallpaper(
@@ -23,25 +23,19 @@ class WallpaperRepository {
     required String type,
   }) async {
     try {
-      File imageFile = File(path);
-      int location;
-
-      // Select location logic...
-      location = type == 'home'
-          ? WallpaperManagerPlus.homeScreen
-          : type == 'lock'
-          ? WallpaperManagerPlus.lockScreen
-          : WallpaperManagerPlus.bothScreens;
-
-      // 1. Give the UI a tiny gap to process dialog closure
-      await Future.delayed(const Duration(milliseconds: 100));
-      Future.microtask(() async {
-        await WallpaperManagerPlus().setWallpaper(imageFile, location);
+      await platform.invokeMethod('setWallpaper', {
+        'path': path,
+        'location': type.contains('home')
+            ? 1
+            : type.contains("lock")
+            ? 2
+            : 3,
       });
-      // await Future.delayed(const Duration(milliseconds: 300));
-      // AppUtils.showToast("Wallpaper Applied Successfully");
-    } catch (e) {
-      AppUtils.showToast("Failed to apply wallpaper");
+      AppUtils.showToast(
+        "Wallpaper applied successfully \n The App Will Restart Now !",
+      );
+    } on PlatformException catch (e) {
+      AppUtils.showToast("Failed to apply: ${e.message}");
     }
   }
 }
